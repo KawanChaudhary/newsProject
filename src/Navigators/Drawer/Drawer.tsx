@@ -2,15 +2,16 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import settingIcon from '../../Components/General/settingIcon';
 import CustomDrawerContent from './CustomDrawerContent';
-import TabViewExample from '../TabView/TabView';
+import TabView from '../TabView/TabView';
+import { RootNavigationParamList } from '../../Types/Navigation';
+import { useTheme } from '../../Contexts/ThemeContext';
 
-type DrawerParamList = {
-    Tabs: undefined;
-};
 
-const Drawer = createDrawerNavigator<DrawerParamList>();
+const Drawer = createDrawerNavigator<RootNavigationParamList>();
 
 const DrawerNavigator = () => {
+
+    const {theme} = useTheme();
 
     const MemoizedDrawerContent = React.useCallback((props: any) => <CustomDrawerContent {...props} />, []);
 
@@ -22,12 +23,16 @@ const DrawerNavigator = () => {
             <Drawer.Screen
                 name="Tabs"
                 options={{
-                    headerRight: () => (settingIcon()),
-                    drawerLabel: 'Home',
-                    title: 'Home',
+                    headerRight: () => settingIcon(),
+                    drawerLabel: 'NewsFeed',
+                    title: 'NewsFeed',
+                    headerTintColor: theme.primary,
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                        letterSpacing: 1,
+                    },
                 }}
-                component={TabViewExample} />
-
+                component={TabView} />
         </Drawer.Navigator>
     );
 };

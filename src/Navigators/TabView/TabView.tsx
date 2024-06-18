@@ -1,65 +1,30 @@
-import * as React from 'react';
-import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import React from 'react';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import Home from '../../Screens/Home/Home';
+import World from '../../Screens/World/World';
+import { useTheme } from '../../Contexts/ThemeContext';
 
-const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: '#ff4081' }} />
-);
+export type TabParamList = {
+  home: undefined;
+  world: undefined;
+  science: undefined;
+};
 
-const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: '#673ab7' }} />
-);
+const Tab = createMaterialTopTabNavigator<TabParamList>();
 
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-});
-
-export default function TabViewExample() {
-  const layout = useWindowDimensions();
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'first', title: 'First' },
-    { key: 'second', title: 'Second' },
-  ]);
-
-  const renderTabBar = (props) => (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-      <TabBar
-        {...props}
-        indicatorStyle={styles.indicator}
-        style={styles.tabBar}
-        tabStyle={styles.tab}
-        scrollEnabled={true}
-      />
-    </ScrollView>
-  );
-
+const TabView: React.FC = () => {
+  const { theme } = useTheme();
   return (
-    <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      renderTabBar={renderTabBar}
-      initialLayout={{ width: layout.width }}
-    />
+    <Tab.Navigator screenOptions={{
+      tabBarIndicatorStyle: {
+        backgroundColor: theme.primary
+      }
+    }}>
+      <Tab.Screen name="home" component={Home} />
+      <Tab.Screen name="world" component={World} />
+      <Tab.Screen name="science" component={World} />
+    </Tab.Navigator>
   );
-}
+};
 
-const styles = StyleSheet.create({
-    scene: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    tabBar: {
-      backgroundColor: '#ffffff',
-    },
-    tab: {
-      width: 120,
-    },
-    indicator: {
-      backgroundColor: '#000000',
-    },
-  });
+export default TabView;

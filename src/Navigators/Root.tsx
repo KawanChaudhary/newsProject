@@ -1,12 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import DrawerNavigator from './Drawer/Drawer';
+import StackNavigator from './Stack/StackNavigator';
+import CustomizeStatusBar from '../Components/General/CustomizeStatusbar';
 
 
 const RootNavigator : React.FC = () => {
   return (
     <NavigationContainer>
-      <DrawerNavigator />
+      <CustomizeStatusBar />
+      <StackNavigator />
     </NavigationContainer>
   );
 };

@@ -1,10 +1,9 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { lightTheme, darkTheme, defaultTheme, Theme } from '../Constants/Theme/theme';
+import { orangeTheme, darkGreenTheme, defaultTheme, Theme } from '../Constants/Theme/theme';
 
 type ThemeContextType = {
   theme: Theme;
-  toggleTheme: () => void;
-  setCustomTheme: (theme: Theme) => void;
+  toggleTheme: (themeName:string) => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -12,22 +11,26 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(defaultTheme);
 
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === lightTheme ? darkTheme : lightTheme));
+  const toggleTheme = (themeName:string) => {
+
+    if(themeName == 'orange'){
+      setTheme(orangeTheme);
+    }
+    else if(themeName == 'darkgreen'){
+      setTheme(darkGreenTheme);
+    }
+    else{
+      setTheme(defaultTheme);
+    }
+    
   };
 
-  const setCustomTheme = (chooseTheme: Theme) => {
-    setTheme(chooseTheme);
-  };
-
-   // Store theme in global variable
    useEffect(() => {
     global.theme = theme;
-    console.log(theme);
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setCustomTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
         {children}
     </ThemeContext.Provider>
   );
