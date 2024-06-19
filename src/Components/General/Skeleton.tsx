@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, Animated, Dimensions, useColorScheme } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { moderateScale } from '../../Utils/ResponsiveUtil';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const SkeletonLoader = ({ height = 20, width = '100%' }) => {
+type props = {
+  height: Number;
+  width: String;
+}
+
+const SkeletonLoader: React.FC<props> = ({ height, width  }) => {
   const animatedValue = React.useRef(new Animated.Value(0)).current;
   const colorScheme = useColorScheme();
 
-  React.useEffect(() => {
+  useEffect(() => {
     Animated.loop(
       Animated.sequence([
         Animated.timing(animatedValue, {
@@ -32,13 +37,13 @@ const SkeletonLoader = ({ height = 20, width = '100%' }) => {
   });
 
   const skeletonColor = colorScheme === 'dark' ? '#333333' : '#e0e0e0';
-  const gradientColors = colorScheme === 'dark' 
-    ? ['#333333', 'rgba(255,255,255,0.1)', '#333333'] 
+  const gradientColors = colorScheme === 'dark'
+    ? ['#333333', 'rgba(255,255,255,0.1)', '#333333']
     : ['#e0e0e0', 'rgba(255,255,255,0.5)', '#e0e0e0'];
 
   return (
-    <View style={[styles.skeletonBox, { height, width, backgroundColor: skeletonColor }]}>
-      <Animated.View style={{ ...StyleSheet.absoluteFillObject, transform: [{ translateX }] }}>
+    <View testID="skeleton-box" style={[styles.skeletonBox, { height, width, backgroundColor: skeletonColor }]}>
+      <Animated.View testID="animated-gradient" style={{ ...StyleSheet.absoluteFillObject, transform: [{ translateX }] }}>
         <LinearGradient
           colors={gradientColors}
           style={StyleSheet.absoluteFillObject}
@@ -54,7 +59,7 @@ const styles = StyleSheet.create({
   skeletonBox: {
     overflow: 'hidden',
     borderRadius: 0,
-    marginBottom:moderateScale(4),
+    marginBottom: moderateScale(4),
   },
 });
 

@@ -23,7 +23,7 @@ const NewsCard: React.FC<Props> = ({ item, theme, loading }) => {
             <View >
                 {loading ?
                     <>
-                        <SkeletonLoader width='100%' height={15} />
+                        <SkeletonLoader width='100%' height={15}  />
                         <SkeletonLoader width='70%' height={15} />
                     </>
                     :
@@ -53,7 +53,7 @@ const NewsCard: React.FC<Props> = ({ item, theme, loading }) => {
                             <Text numberOfLines={5} style={styles.descriptionText} >{item.description}</Text>
                         </View>
 
-                        <Image source={getDefaultImage(item.urlToImage)} style={styles.image} />
+                        <Image source={getDefaultImage(item.urlToImage)} style={styles.image} testID='news-card-image' />
                     </View>
                 }
             </View>

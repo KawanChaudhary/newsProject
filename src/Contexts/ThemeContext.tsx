@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { orangeTheme, darkGreenTheme, defaultTheme, Theme } from '../Constants/Theme/theme';
 
 type ThemeContextType = {
@@ -24,10 +24,6 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
     
   };
-
-   useEffect(() => {
-    global.theme = theme;
-  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

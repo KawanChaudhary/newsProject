@@ -26,6 +26,7 @@ const CommonFlatlist: React.FC<Props> = ({ articles, loading }) => {
                 renderItem={renderList}
                 contentContainerStyle={styles.flatListContainer}
                 showsVerticalScrollIndicator={false}
+                testID="flatlist"
             />
         </SafeAreaView>
     )
